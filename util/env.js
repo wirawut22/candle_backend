@@ -1,8 +1,8 @@
 const env = {
     database: 'admin_candle',
-    username: 'admin_candle',
-    password: 'a6Xn61z!',
-    host: '207.148.125.233',
+    username: 'adm_candle',
+    password: 'C504_fzq',
+    host: 'localhost',
     dialect: 'mysql',
     pool: {
       max: 5,
