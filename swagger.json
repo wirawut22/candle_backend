@@ -1,0 +1,1074 @@
+{
+   "info": {
+      "version": "1.0.0",
+      "title": "Rest API",
+      "description": "Document API Information",
+      "contact": {
+         "name": "Hardy Developer"
+      },
+      "servers": [
+         "http://localhost:5000"
+      ]
+   },
+   "paths": {
+      "/api/news/find/all": {
+         "get": {
+            "tags": [
+               "ข่าวสาร"
+            ],
+            "summary": "ดึงข่าวสารทั้งหมด",
+            "responses": {
+               "200": {
+                  "description": "เเสดงข้อมูลข่าวสารทั้งหมด",
+                  "schema": {
+                     "$ref": "#/definitions/news_list"
+                  }
+               }
+            }
+         }
+      },
+      "/api/news/create": {
+         "post": {
+            "tags": [
+               "ข่าวสาร"
+            ],
+            "summary": "เพิ่มข่าวสารใหม่",
+            "parameters": [
+               {
+                  "name": "เพิ่มข่าวสาร",
+                  "in": "body",
+                  "description": "ข่าวสารที่ต้องการเพิ่ม",
+                  "schema": {
+                     "$ref": "#/definitions/news_create"
+                  }
+               }
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "responses": {
+               "200": {
+                  "description": "OK",
+                  "schema": {
+                     "$ref": "#/definitions/news_response"
+                  }
+               }
+            }
+         }
+      },
+      "/api/news/find/id/{id}": {
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "description": "id ข่าวสารที่ต้องการค้นหา",
+               "type": "string"
+            }
+         ],
+         "get": {
+            "tags": [
+               "ข่าวสาร"
+            ],
+            "summary": "ดึงข่าวสารด้วย id",
+            "responses": {
+               "200": {
+                  "description": "ข่าวสารที่ค้นหา",
+                  "schema": {
+                     "$ref": "#/definitions/news_by_id"
+                  }
+               }
+            }
+         }
+      },
+      "/api/news/delete/{id}": {
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "description": "id ข่าวต้องการลบ",
+               "type": "string"
+            }
+         ],
+         "delete": {
+            "summary": "ลบข่าวสารด้วย id",
+            "tags": [
+               "ข่าวสาร"
+            ],
+            "responses": {
+               "200": {
+                  "description": "ข่าวสารที่ลบ",
+                  "schema": {
+                     "$ref": "#/definitions/news_response"
+                  }
+               }
+            }
+         }
+      },
+      "/api/news/update/{id}": {
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "description": "id ข่าวต้องการแก้ไข",
+               "type": "string"
+            }
+         ],
+         "put": {
+            "summary": "แก้ไขข่าวสาร",
+            "tags": [
+               "ข่าวสาร"
+            ],
+            "parameters": [
+               {
+                  "name": "แก้ไขข่าวสาร",
+                  "in": "body",
+                  "description": "ข่าวสารที่ต้องการแก้ไข",
+                  "schema": {
+                     "$ref": "#/definitions/news_edit"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "ข่าวสารที่แก้ไข",
+                  "schema": {
+                     "$ref": "#/definitions/news_response"
+                  }
+               }
+            }
+         }
+      },
+      "/api/place/find/all/{latitude}/{longtitude}": {
+         "parameters": [
+            {
+               "name": "latitude",
+               "in": "path",
+               "required": true,
+               "description": "latitude ที่ต้องการค้นหา",
+               "type": "string"
+            },
+            {
+               "name": "longtitude",
+               "in": "path",
+               "required": true,
+               "description": "longtitude ที่ต้องการค้นหา",
+               "type": "string"
+            }
+         ],
+         "get": {
+            "tags": [
+               "สถานที่"
+            ],
+            "summary": "ดึงสถานที่ทั้งหมด",
+            "responses": {
+               "200": {
+                  "description": "เเสดงข้อมูลสถานที่ทั้งหมด",
+                  "schema": {
+                     "$ref": "#/definitions/place_list"
+                  }
+               }
+            }
+         }
+      },
+      "/api/place/find/combine/{latitude}/{longtitude}": {
+         "parameters": [
+            {
+               "name": "latitude",
+               "in": "path",
+               "required": true,
+               "description": "latitude ที่ต้องการค้นหา",
+               "type": "string"
+            },
+            {
+               "name": "longtitude",
+               "in": "path",
+               "required": true,
+               "description": "longtitude ที่ต้องการค้นหา",
+               "type": "string"
+            }
+         ],
+         "get": {
+            "tags": [
+               "สถานที่"
+            ],
+            "summary": "ดึงสถานที่ที่จัดกลุ่มทั้งหมด",
+            "responses": {
+               "200": {
+                  "description": "เเสดงข้อมูลสถานที่ที่จัดกลุ่มทั้งหมด",
+                  "schema": {
+                     "$ref": "#/definitions/place_list"
+                  }
+               }
+            }
+         }
+      },
+      "/api/place/create": {
+         "post": {
+            "tags": [
+               "สถานที่"
+            ],
+            "summary": "เพิ่มสถานที่ใหม่",
+            "parameters": [
+               {
+                  "name": "เพิ่มสถานที่",
+                  "in": "body",
+                  "description": "สถานที่ที่ต้องการเพิ่ม",
+                  "schema": {
+                     "$ref": "#/definitions/place_create"
+                  }
+               }
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "responses": {
+               "200": {
+                  "description": "OK",
+                  "schema": {
+                     "$ref": "#/definitions/place_response"
+                  }
+               }
+            }
+         }
+      },
+      "/api/place/find/id/{id}/{latitude}/{longtitude}": {
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "description": "id สถานที่ที่ต้องการค้นหา",
+               "type": "string"
+            },
+            {
+               "name": "latitude",
+               "in": "path",
+               "required": true,
+               "description": "latitude ที่ต้องการค้นหา",
+               "type": "string"
+            },
+            {
+               "name": "longtitude",
+               "in": "path",
+               "required": true,
+               "description": "longtitude ที่ต้องการค้นหา",
+               "type": "string"
+            }
+         ],
+         "get": {
+            "tags": [
+               "สถานที่"
+            ],
+            "summary": "ดึงสถานที่ด้วย id",
+            "responses": {
+               "200": {
+                  "description": "สถานที่ที่ค้นหา",
+                  "schema": {
+                     "$ref": "#/definitions/place_by_id"
+                  }
+               }
+            }
+         }
+      },
+      "/api/place/find/group_id/{group_id}": {
+         "parameters": [
+            {
+               "name": "group_id",
+               "in": "path",
+               "required": true,
+               "description": "group id ที่ต้องการค้นหา",
+               "type": "string"
+            }
+         ],
+         "get": {
+            "tags": [
+               "สถานที่"
+            ],
+            "summary": "ดึงสถานที่ด้วย group_id",
+            "responses": {
+               "200": {
+                  "description": "สถานที่ที่ค้นหา",
+                  "schema": {
+                     "$ref": "#/definitions/place_list"
+                  }
+               }
+            }
+         }
+      },
+      "/api/place/delete/{id}": {
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "description": "id สถานที่ต้องการลบ",
+               "type": "string"
+            }
+         ],
+         "delete": {
+            "summary": "ลบสถานที่ด้วย id",
+            "tags": [
+               "สถานที่"
+            ],
+            "responses": {
+               "200": {
+                  "description": "สถานที่ที่ลบ",
+                  "schema": {
+                     "$ref": "#/definitions/place_response"
+                  }
+               }
+            }
+         }
+      },
+      "/api/place/update/{id}": {
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "description": "id สถานที่ที่ต้องการแก้ไข",
+               "type": "string"
+            }
+         ],
+         "put": {
+            "summary": "แก้ไขสถานที่",
+            "tags": [
+               "สถานที่"
+            ],
+            "parameters": [
+               {
+                  "name": "แก้ไขข่าวสาร",
+                  "in": "body",
+                  "description": "ข่าวสารที่ต้องการแก้ไข",
+                  "schema": {
+                     "$ref": "#/definitions/place_edit"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "สถานที่ที่แก้ไข",
+                  "schema": {
+                     "$ref": "#/definitions/place_response"
+                  }
+               }
+            }
+         }
+      },
+      "/api/placeGroup/find/all": {
+         "get": {
+            "tags": [
+               "กลุ่มสถานที่"
+            ],
+            "summary": "ดึงกลุ่มสถานที่ทั้งหมด",
+            "responses": {
+               "200": {
+                  "description": "เเสดงข้อมูลกลุ่มสถานที่ทั้งหมด",
+                  "schema": {
+                     "$ref": "#/definitions/place_group_list"
+                  }
+               }
+            }
+         }
+      },
+      "/api/placeGroup/create": {
+         "post": {
+            "tags": [
+               "กลุ่มสถานที่"
+            ],
+            "summary": "เพิ่มกลุ่มสถานที่ใหม่",
+            "parameters": [
+               {
+                  "name": "เพิ่มกลุ่มสถานที่",
+                  "in": "body",
+                  "description": "กลุ่มสถานที่ที่ต้องการเพิ่ม",
+                  "schema": {
+                     "$ref": "#/definitions/place_group_create"
+                  }
+               }
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "responses": {
+               "200": {
+                  "description": "OK",
+                  "schema": {
+                     "$ref": "#/definitions/place_group_response"
+                  }
+               }
+            }
+         }
+      },
+      "/api/placeGroup/find/id/{id}": {
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "description": "id กลุ่มสถานที่ที่ต้องการค้นหา",
+               "type": "string"
+            }
+         ],
+         "get": {
+            "tags": [
+               "กลุ่มสถานที่"
+            ],
+            "summary": "ดึงกลุ่มสถานที่ด้วย id",
+            "responses": {
+               "200": {
+                  "description": "กลุ่มสถานที่ที่ค้นหา",
+                  "schema": {
+                     "$ref": "#/definitions/place_group_by_id"
+                  }
+               }
+            }
+         }
+      },
+      "/api/placeGroup/delete/{id}": {
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "description": "id กลุ่มสถานที่ต้องการลบ",
+               "type": "string"
+            }
+         ],
+         "delete": {
+            "summary": "ลบกลุ่มสถานที่ด้วย id",
+            "tags": [
+               "กลุ่มสถานที่"
+            ],
+            "responses": {
+               "200": {
+                  "description": "กลุ่มสถานที่ที่ลบ",
+                  "schema": {
+                     "$ref": "#/definitions/place_group_response"
+                  }
+               }
+            }
+         }
+      },
+      "/api/placeGroup/update/{id}": {
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "description": "id กลุ่มสถานที่ต้องการแก้ไข",
+               "type": "string"
+            }
+         ],
+         "put": {
+            "summary": "แก้ไขกลุ่มสถานที่ใหม่",
+            "tags": [
+               "กลุ่มสถานที่"
+            ],
+            "parameters": [
+               {
+                  "name": "แก้ไขกลุ่มสถานที่",
+                  "in": "body",
+                  "description": "กลุ่มสถานที่ที่ต้องการแก้ไข",
+                  "schema": {
+                     "$ref": "#/definitions/place_group_edit"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "กลุ่มสถานที่ที่แก้ไข",
+                  "schema": {
+                     "$ref": "#/definitions/place_group_response"
+                  }
+               }
+            }
+         }
+      },
+      "/api/zone/find/all": {
+         "get": {
+            "tags": [
+               "โซน"
+            ],
+            "summary": "ดึงโซนทั้งหมด",
+            "responses": {
+               "200": {
+                  "description": "เเสดงข้อมูลโซนทั้งหมด",
+                  "schema": {
+                     "$ref": "#/definitions/zone_list"
+                  }
+               }
+            }
+         }
+      },
+      "/api/zone/create": {
+         "post": {
+            "tags": [
+               "โซน"
+            ],
+            "summary": "เพิ่มโซนใหม่",
+            "parameters": [
+               {
+                  "name": "เพิ่มโซน",
+                  "in": "body",
+                  "description": "โซนที่ต้องการเพิ่ม",
+                  "schema": {
+                     "$ref": "#/definitions/zone_create"
+                  }
+               }
+            ],
+            "produces": [
+               "application/json"
+            ],
+            "responses": {
+               "200": {
+                  "description": "OK",
+                  "schema": {
+                     "$ref": "#/definitions/zone_response"
+                  }
+               }
+            }
+         }
+      },
+      "/api/zone/find/id/{id}": {
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "description": "id โซนที่ต้องการค้นหา",
+               "type": "string"
+            }
+         ],
+         "get": {
+            "tags": [
+               "โซน"
+            ],
+            "summary": "ดึงโซนด้วย id",
+            "responses": {
+               "200": {
+                  "description": "โซนที่ค้นหา",
+                  "schema": {
+                     "$ref": "#/definitions/zone_by_id"
+                  }
+               }
+            }
+         }
+      },
+      "/api/zone/delete/{id}": {
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "description": "id โซนต้องการลบ",
+               "type": "string"
+            }
+         ],
+         "delete": {
+            "summary": "ลบโซนด้วย id",
+            "tags": [
+               "โซน"
+            ],
+            "responses": {
+               "200": {
+                  "description": "โซนที่ลบ",
+                  "schema": {
+                     "$ref": "#/definitions/zone_response"
+                  }
+               }
+            }
+         }
+      },
+      "/api/zone/update/{id}": {
+         "parameters": [
+            {
+               "name": "id",
+               "in": "path",
+               "required": true,
+               "description": "id โซนต้องการแก้ไข",
+               "type": "string"
+            }
+         ],
+         "put": {
+            "summary": "แก้ไขโซนใหม่",
+            "tags": [
+               "โซน"
+            ],
+            "parameters": [
+               {
+                  "name": "แก้ไขโซน",
+                  "in": "body",
+                  "description": "โซนที่ต้องการแก้ไข",
+                  "schema": {
+                     "$ref": "#/definitions/zone_edit"
+                  }
+               }
+            ],
+            "responses": {
+               "200": {
+                  "description": "โซนที่แก้ไข",
+                  "schema": {
+                     "$ref": "#/definitions/zone_response"
+                  }
+               }
+            }
+         }
+      }
+   },
+   "definitions": {
+      "news_list": {
+         "type": "object",
+         "properties": {
+            "status_code": {
+               "type": "number"
+            },
+            "message": {
+               "type": "string"
+            },
+            "news_list": {
+               "type": "array",
+               "items": {
+                  "$ref": "#definitions/news_main"
+               }
+            }
+         }
+      },
+      "news_by_id": {
+         "type": "object",
+         "properties": {
+            "status_code": {
+               "type": "number"
+            },
+            "message": {
+               "type": "string"
+            },
+            "news": {
+               "type": "object",
+               "items": {
+                  "$ref": "#definitions/news_main"
+               }
+            }
+         }
+      },
+      "news_main": {
+         "properties": {
+            "id": {
+               "type": "number",
+               "uniqueItems": true
+            },
+            "topic": {
+               "type": "string"
+            },
+            "description1": {
+               "type": "string"
+            },
+            "description2": {
+               "type": "string"
+            },
+            "image": {
+               "type": "string"
+            },
+            "author": {
+               "type": "string"
+            },
+            "create_dttm": {
+               "type": "string"
+            }
+         }
+      },
+      "news_create": {
+         "required": [
+            "topic"
+         ],
+         "properties": {
+            "topic": {
+               "type": "string"
+            },
+            "description1": {
+               "type": "string"
+            },
+            "description2": {
+               "type": "string"
+            },
+            "image": {
+               "type": "string"
+            },
+            "author": {
+               "type": "string"
+            }
+         }
+      },
+      "news_edit": {
+         "required": [
+            "topic"
+         ],
+         "properties": {
+            "topic": {
+               "type": "string"
+            },
+            "description1": {
+               "type": "string"
+            },
+            "description2": {
+               "type": "string"
+            },
+            "image": {
+               "type": "string"
+            },
+            "author": {
+               "type": "string"
+            }
+         }
+      },
+      "news_response": {
+         "properties": {
+            "status_code": {
+               "type": "number"
+            },
+            "message": {
+               "type": "string"
+            }
+         }
+      },
+      "place_list": {
+         "type": "object",
+         "properties": {
+            "status_code": {
+               "type": "number"
+            },
+            "message": {
+               "type": "string"
+            },
+            "place_list": {
+               "type": "array",
+               "items": {
+                  "$ref": "#definitions/place_main"
+               }
+            }
+         }
+      },
+      "place_by_id": {
+         "type": "object",
+         "properties": {
+            "status_code": {
+               "type": "number"
+            },
+            "message": {
+               "type": "string"
+            },
+            "place": {
+               "type": "object",
+               "items": {
+                  "$ref": "#definitions/place_main"
+               }
+            }
+         }
+      },
+      "place_main": {
+         "properties": {
+            "id": {
+               "type": "number",
+               "uniqueItems": true
+            },
+            "topic": {
+               "type": "string"
+            },
+            "description1": {
+               "type": "string"
+            },
+            "description2": {
+               "type": "string"
+            },
+            "image": {
+               "type": "string"
+            },
+            "latitude": {
+               "type": "string"
+            },
+            "longtitude": {
+               "type": "string"
+            },
+            "author": {
+               "type": "string"
+            },
+            "create_dttm": {
+               "type": "string"
+            },
+            "place_group":{
+               "type": "object"
+            },
+            "distance": {
+               "type": "string"
+            },
+            "distance_unit": {
+               "type": "string"
+            },
+            "duration": {
+               "type": "string"
+            },
+            "duration_unit": {
+               "type": "string"
+            }
+         }
+      },
+      "place_create": {
+         "required": [
+            "topic"
+         ],
+         "properties": {
+            "group_id": {
+               "type": "number"
+            },
+            "topic": {
+               "type": "string"
+            },
+            "description1": {
+               "type": "string"
+            },
+            "description2": {
+               "type": "string"
+            },
+            "image": {
+               "type": "string"
+            },
+            "latitude": {
+               "type": "string"
+            },
+            "longtitude": {
+               "type": "string"
+            },
+            "author": {
+               "type": "string"
+            }
+         }
+      },
+      "place_edit": {
+         "required": [
+            "topic"
+         ],
+         "properties": {
+            "group_id": {
+               "type": "number"
+            },
+            "topic": {
+               "type": "string"
+            },
+            "description1": {
+               "type": "string"
+            },
+            "description2": {
+               "type": "string"
+            },
+            "image": {
+               "type": "string"
+            },
+            "latitude": {
+               "type": "string"
+            },
+            "longtitude": {
+               "type": "string"
+            },
+            "author": {
+               "type": "string"
+            }
+         }
+      },
+      "place_response": {
+         "properties": {
+            "status_code": {
+               "type": "string"
+            },
+            "message": {
+               "type": "string"
+            }
+         }
+      },
+      "place_group_list": {
+         "type": "object",
+         "properties": {
+            "status_code": {
+               "type": "number"
+            },
+            "message": {
+               "type": "string"
+            },
+            "place_group_list": {
+               "type": "array",
+               "items": {
+                  "$ref": "#definitions/place_group_main"
+               }
+            }
+         }
+      },
+      "place_group_by_id": {
+         "type": "object",
+         "properties": {
+            "status_code": {
+               "type": "number"
+            },
+            "message": {
+               "type": "string"
+            },
+            "place_group": {
+               "type": "object",
+               "items": {
+                  "$ref": "#definitions/place_group_main"
+               }
+            }
+         }
+      },
+      "place_group_main": {
+         "properties": {
+            "id": {
+               "type": "number",
+               "uniqueItems": true
+            },
+            "topic": {
+               "type": "string"
+            },
+            "description": {
+               "type": "string"
+            },
+            "create_dttm": {
+               "type": "string"
+            }
+         }
+      },
+      "place_group_create": {
+         "required": [
+            "topic"
+         ],
+         "properties": {
+            "topic": {
+               "type": "string"
+            },
+            "description": {
+               "type": "string"
+            }
+         }
+      },
+      "place_group_edit": {
+         "required": [
+            "topic"
+         ],
+         "properties": {
+            "topic": {
+               "type": "string"
+            },
+            "description": {
+               "type": "string"
+            }
+         }
+      },
+      "place_group_response": {
+         "properties": {
+            "status_code": {
+               "type": "number"
+            },
+            "message": {
+               "type": "string"
+            }
+         }
+      },
+      "zone_list": {
+         "type": "object",
+         "properties": {
+            "status_code": {
+               "type": "number"
+            },
+            "message": {
+               "type": "string"
+            },
+            "zone_list": {
+               "type": "array",
+               "items": {
+                  "$ref": "#definitions/zone_main"
+               }
+            }
+         }
+      },
+      "zone_by_id": {
+         "type": "object",
+         "properties": {
+            "status_code": {
+               "type": "number"
+            },
+            "message": {
+               "type": "string"
+            },
+            "zone": {
+               "type": "array",
+               "items": {
+                  "$ref": "#definitions/zone_main"
+               }
+            }
+         }
+      },
+      "zone_main": {
+         "properties": {
+            "id": {
+               "type": "string",
+               "uniqueItems": true
+            },
+            "topic": {
+               "type": "string"
+            },
+            "description": {
+               "type": "string"
+            },
+            "amount": {
+               "type": "number"
+            },
+            "create_dttm": {
+               "type": "string"
+            }
+         }
+      },
+      "zone_create": {
+         "required": [
+            "topic"
+         ],
+         "properties": {
+            "topic": {
+               "type": "string"
+            },
+            "description": {
+               "type": "string"
+            },
+            "amount": {
+               "type": "number"
+            }
+         }
+      },
+      "zone_edit": {
+         "required": [
+            "topic"
+         ],
+         "properties": {
+            "topic": {
+               "type": "string"
+            },
+            "description": {
+               "type": "string"
+            },
+            "amount": {
+               "type": "number"
+            }
+         }
+      },
+      "zone_response": {
+         "properties": {
+            "status_code": {
+               "type": "number"
+            },
+            "message": {
+               "type": "string"
+            }
+         }
+      }
+   }
+}
