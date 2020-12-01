@@ -1,5 +1,4 @@
-// index.js
-
+// index.js 
 var express = require("express");
 var cors = require("cors"); 
 const bodyParser = require("body-parser");
@@ -43,6 +42,9 @@ app.use('/api/zone', zoneRoute);
 const reserveRoute = require('./routes/reserve');
 app.use('/api/reserve', reserveRoute);
 
+const authenRoute = require('./routes/authen');
+app.use('/api/authen', authenRoute);
 
 // set port & run server
 app.listen(port, () => console.log(`Candle app listening on port ${port}!`));
+
