@@ -1,7 +1,7 @@
 const env = {
-    database: 'admin_candle',
-    username: 'adm_candle',
-    password: 'C504_fzq',
+    database: 'candlesfest_db',
+    username: 'admin_candlesfest',
+    password: 'Ktkq12%0',
     host: 'localhost',
     dialect: 'mysql',
     pool: {
