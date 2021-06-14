@@ -412,18 +412,22 @@ route.get('/find/all/:latitude/:longtitude', (req, res, next) => {
         const destination = obj.latitude + "," + obj.longtitude;
         destinations.push(destination);
       });
-
+      console.log("DISTANCE MATRIX");
       distance.matrix(origins, destinations, async function (err, distances) {
-
+        console.log("DISTANCE MATRIX2");
         var dataList = [];
 
         if (err) {
+          console.log("ERR");
           return console.log(err);
         }
         if (!distances) {
+          console.log("NO");
           return console.log('no distances');
         }
+        console.log("distances.status="+distances.status);
         if (distances.status == 'OK') {
+          console.log("DISTANCE OK");
           for (var i = 0; i < origins.length; i++) {
             for (var j = 0; j < destinations.length; j++) {
               var origin = distances.origin_addresses[i];
@@ -479,6 +483,8 @@ route.get('/find/all/:latitude/:longtitude', (req, res, next) => {
           jsonResult.place_list = dataList;
           res.json(jsonResult);
 
+        }else{
+          console.log("CCC");
         }
  
 

@@ -16,7 +16,7 @@ route.get('/find/id/:id', async (req, res, next) => {
   const id = req.params.id;
   let zone = {};
   if (id) { 
-    let zoneList = await sequelize.query("SELECT z.id, z.topic, z.amount, z.status, z.create_dttm, z.update_dttm FROM admin_candle.zone z WHERE z.id=(:id)", {
+    let zoneList = await sequelize.query("SELECT z.id, z.topic, z.amount, z.status, z.create_dttm, z.update_dttm FROM zone z WHERE z.id=(:id)", {
       replacements: {id: id},
       model: sequelize.Zone,
       mapToModel: true,
@@ -51,7 +51,7 @@ route.get('/find/all', async (req, res, next) => {
   console.log('params::==', req.params);
 
   const jsonResult = {};
-  let zoneList = await sequelize.query("SELECT z.id, z.topic, z.status, z.create_dttm, z.update_dttm FROM admin_candle.zone z", {
+  let zoneList = await sequelize.query("SELECT z.id, z.topic, z.status, z.create_dttm, z.update_dttm FROM zone z", {
     replacements: {},
     model: sequelize.Zone,
     mapToModel: true,
@@ -95,8 +95,8 @@ route.get('/find/isempty/:id/:zone_id/:amount', async (req, res, next) => {
   let isEmpty = await sequelize.query(
   "SELECT "
   + "CASE WHEN (:amount)+(SUM(r.amount))>z.amount THEN 'false' ELSE 'true' END "
-  + "AS empty_seat FROM admin_candle.reserve r "
-  + "LEFT JOIN admin_candle.zone z "
+  + "AS empty_seat FROM reserve r "
+  + "LEFT JOIN zone z "
   + "ON r.zone_id = z.id "
   + "WHERE 1=1 "
   + "AND r.status <> 'I' "
@@ -176,7 +176,7 @@ route.get('/find/all/active', async (req, res, next) => {
   console.log('params::==', req.params);
 
   const jsonResult = {};
-  let zoneList = await sequelize.query("SELECT t.id, t.topic, t.amount, t.status, SUM(t.booked) AS booked, (t.amount-SUM(t.booked)) AS empty_seat, t.create_dttm, t.update_dttm FROM (SELECT z.id, z.topic, z.amount, CASE WHEN SUM(r.amount) IS NOT NULL AND r.status='A' THEN SUM(r.amount) ELSE 0 END booked, z.status, z.create_dttm, z.update_dttm FROM admin_candle.zone z LEFT JOIN admin_candle.reserve r ON z.id = r.zone_id WHERE z.status=('A') GROUP BY z.id,z.topic,r.status) AS t GROUP BY t.id",
+  let zoneList = await sequelize.query("SELECT t.id, t.topic, t.amount, t.status, SUM(t.booked) AS booked, (t.amount-SUM(t.booked)) AS empty_seat, t.create_dttm, t.update_dttm FROM (SELECT z.id, z.topic, z.amount, CASE WHEN SUM(r.amount) IS NOT NULL AND r.status='A' THEN SUM(r.amount) ELSE 0 END booked, z.status, z.create_dttm, z.update_dttm FROM zone z LEFT JOIN reserve r ON z.id = r.zone_id WHERE z.status=('A') GROUP BY z.id,z.topic,r.status) AS t GROUP BY t.id",
   {
     replacements: {status: 'A'},
     model: sequelize.Zone,
@@ -248,7 +248,7 @@ route.put('/update/:id', async (req, res, next) => {
       );
     })    
     .then(function(obj){ 
-      let zoneList = sequelize.query("SELECT z.id, z.topic, z.amount, z.status, z.create_dttm, z.update_dttm FROM admin_candle.zone z WHERE z.id=(:id)", {
+      let zoneList = sequelize.query("SELECT z.id, z.topic, z.amount, z.status, z.create_dttm, z.update_dttm FROM zone z WHERE z.id=(:id)", {
         replacements: {id: id},
         model: sequelize.Zone,
         mapToModel: true,
