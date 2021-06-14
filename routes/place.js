@@ -93,7 +93,7 @@ var uploads = multer({ storage: storage }).fields([
 
 ]);
  
-const API_KEY = 'AIzaSyB4UH9t_QJ7nVypuKbNqbx25ffRSD-pvTA';
+const API_KEY = 'AIzaSyBZ1ajdNwqtRjAgufGCjs_RPX0WTcZQOo8';
 
 //normal function
 function groupBy(list, keyGetter) {
@@ -411,23 +411,18 @@ route.get('/find/all/:latitude/:longtitude', (req, res, next) => {
         //set destination
         const destination = obj.latitude + "," + obj.longtitude;
         destinations.push(destination);
-      });
-      console.log("DISTANCE MATRIX");
+      }); 
+      
       distance.matrix(origins, destinations, async function (err, distances) {
-        console.log("DISTANCE MATRIX2");
         var dataList = [];
 
-        if (err) {
-          console.log("ERR");
+        if (err) { 
           return console.log(err);
         }
-        if (!distances) {
-          console.log("NO");
+        if (!distances) { 
           return console.log('no distances');
         }
-        console.log("distances.status="+distances.status);
-        if (distances.status == 'OK') {
-          console.log("DISTANCE OK");
+        if (distances.status == 'OK') { 
           for (var i = 0; i < origins.length; i++) {
             for (var j = 0; j < destinations.length; j++) {
               var origin = distances.origin_addresses[i];
@@ -484,7 +479,7 @@ route.get('/find/all/:latitude/:longtitude', (req, res, next) => {
           res.json(jsonResult);
 
         }else{
-          console.log("CCC");
+          console.log("distances.status = "+distances.status);
         }
  
 
