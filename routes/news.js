@@ -193,7 +193,7 @@ route.post('/create', (req, res, next) => {
 
       for(var index=0;index<filesSize;index++){
         const obj = "images["+index+"]";
-        const fullPath = "http://"+hostname + "/news/"+ req.files[obj][0].originalname;
+        const fullPath = "https://"+hostname + "/news/"+ req.files[obj][0].originalname;
         //const fullPath = req.files[obj][0].originalname;
         if(index==0){
           fullPathStr = fullPath;
